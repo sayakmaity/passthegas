@@ -1,21 +1,48 @@
+@font-face {
+  font-family: 'Airbnb Cereal';
+  src: url('AirbnbCereal_W_Lt.otf') format('opentype');
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Airbnb Cereal';
 }
 
-a {
+/* a {
   color: #7dd3fc;
   text-decoration: none;
-}
+} */
 
 * {
   box-sizing: border-box;
 }
 
-body {
-  color: #e7e8e8;
-  background: #0f1318;
+/* Define your keyframes for the animation */
+@keyframes animatedGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
+
+body {
+  /* Set the dimensions of your container */
+  height: 100vh;
+  width: 100vw;
+
+  /* Set the background gradient with multiple color stops */
+  background: linear-gradient(45deg, #242038, #31081f, #081056,#242038, #31081f, #081056);
+  background-size: 300% 300%;
+
+  /* Apply the animation */
+  animation: animatedGradient 15s ease infinite;
+}
+
+
