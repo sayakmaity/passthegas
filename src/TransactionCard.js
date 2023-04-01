@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { MdCheckCircle, MdCancel } from "react-icons/md";
 
 const Card = styled.div`
-  background-color: #2c2c2c;
-  color: #ffffff;
+  background-color: rgba(255,225,225,0.7);
+  color: #081056;
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 10px;
