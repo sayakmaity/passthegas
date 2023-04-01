@@ -21,7 +21,7 @@ export default function Home() {
   const ETHERSCAN_API_KEY = "247XENS1UNZU23RTB3WB2Y4ZDHWV58MH1N";
 
   async function fetchTransactionData(address) {
-    const url = `https://api-goerli.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
+    const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
 
     try {
       const response = await fetch(url);
@@ -51,7 +51,8 @@ export default function Home() {
         try {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
-          const address = await signer.getAddress();
+          // const address = await signer.getAddress();
+          const address = '0x97c46EeC87a51320c05291286f36689967834854'
 
           // Replace the following line with the API call to fetch transactions
           const data = await fetchTransactionData(address);
