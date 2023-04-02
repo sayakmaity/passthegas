@@ -15,7 +15,9 @@ const Container = styled.div`
   padding: 10px;
   display: flex;
   border: solid 1px;
+  border-color: rgba(255, 225, 225, 0.8);
   border-radius: 10px;
+  text-align: left;
 `;
 
 export default function Home() {
@@ -96,6 +98,8 @@ export default function Home() {
       <div className="container">
         <main className="main">
           <h1 className="title">Welcome to PassTheGas!</h1>
+          <h2>Recent Transaction Data</h2>
+          <hr/>
           <Container>
             {transactions.map((transaction, index) => (
               <TransactionCard key={index} transaction={transaction} />

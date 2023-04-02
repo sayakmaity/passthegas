@@ -55,4 +55,13 @@ body {
   animation: animatedGradient 15s ease infinite;
 }
 
+hr {
+  border: 1px solid;
+  width: 1110px;
+  margin-left: 0px;
+  margin-top: 20px;
+  background-color: #E2E2E2;
+  color: #E2E2E2;
+}
+
 
