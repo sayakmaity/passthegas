@@ -57,7 +57,15 @@ export default function Home() {
 
   async function fetchTransactionData(address) {
     const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
-
+    const getTransactionType = (input) => {
+      if (input === '0x') {
+        return 'Normal';
+      } else if (input.startsWith('0x')) {
+        return 'Smart Contract';
+      } else {
+        return 'Internal';
+      }
+    };
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -65,9 +73,10 @@ export default function Home() {
         // Process and return the transaction data as needed
         return data.result.map((tx) => ({
           timestamp: (new Date(tx.timeStamp * 1000)).toDateString(),
-          from: tx.from,
-          to: tx.to,
-          value: ethers.utils.formatEther(tx.value),
+          type: getTransactionType(tx.input),
+          gasUsed: tx.gasUsed,
+          percent: parseFloat(tx.gasUsed / tx.gas * 100).toFixed(2),
+          energy: parseFloat(tx.gasUsed * tx.gasPrice / 10**15).toFixed(2),
           success: tx.isError === "0",
         }));
       } else {
