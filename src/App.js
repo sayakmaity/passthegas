@@ -10,6 +10,12 @@ import { ethers } from "ethers";
 import "./styles/Home.css";
 import "./styles/globals.css";
 // Add this new styled-component
+const Subscript = styled.sub`
+  font-size: 75%;
+  vertical-align: baseline;
+  position: relative;
+  bottom: -0.25em;
+`;
 
 const StatsContainer = styled.div`
   display: flex;
@@ -69,14 +75,15 @@ export default function Home() {
       (acc, tx) => {
         if (new Date(tx.timestamp) > oneMonthAgo) {
           acc.transactions += 1;
-          acc.energy += parseFloat(tx.energy);
+          acc.co2 += parseFloat(tx.energy) * 0.000455;
           acc.gwei += parseFloat((tx.gasUsed * tx.gasPrice) / 10 ** 9);
         }
         return acc;
       },
-      { transactions: 0, energy: 0, gwei: 0 }
+      { transactions: 0, co2: 0, gwei: 0 }
     );
   }
+
   const addr = useAddress();
   console.log(addr);
 
@@ -130,7 +137,7 @@ export default function Home() {
 
           // Calculate the stats for the past month
           const stats = calculateStatsForPastMonth(processedTransactions);
-          setTotalEnergy(stats.energy);
+          setTotalEnergy(stats.co2);
           setStats({ transactions: stats.transactions, gwei: stats.gwei });
 
           return processedTransactions;
@@ -191,17 +198,14 @@ export default function Home() {
             <div>
               <StatsContainer>
                 <LargeStat>
-                  {totalEnergy.toFixed(2).toLocaleString()} kWh
+                  {(totalEnergy * 1000).toFixed(2).toLocaleString()} kg of CO
+                  <sub>2</sub>
                 </LargeStat>
-                <h4>Used over the past one month in Ethereum transactions</h4>
-                <SmallStatsContainer>
-                  <SmallStat>
-                    Transactions: {stats.transactions.toLocaleString()}
-                  </SmallStat>
-                  <SmallStat>
-                    Gwei: {stats.gwei.toFixed(2).toLocaleString()}
-                  </SmallStat>
-                </SmallStatsContainer>
+                <h4>
+                  Used over the past one month in{" "}
+                  {stats.transactions.toLocaleString()} Ethereum transactions
+                  consuming {stats.gwei.toFixed(2).toLocaleString()} Gwei
+                </h4>
               </StatsContainer>
 
               <h2>Recent Transaction Data</h2>
@@ -224,44 +228,3 @@ export default function Home() {
     </>
   );
 }
-
-// async function fetchTransactionData(address) {
-//   const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
-//   const getTransactionType = (input) => {
-//     if (input === "0x") {
-//       return "Normal";
-//     } else if (input.startsWith("0x")) {
-//       return "Smart Contract";
-//     } else {
-//       return "Internal";
-//     }
-//   };
-
-//   try {
-//     const response = await fetch(url);
-//     const data = await response.json();
-//     if (data.status === "1") {
-//       // Process the transaction data as needed
-//       const processedTransactions = data.result.map((tx) => ({
-//         timestamp: new Date(tx.timeStamp * 1000).toDateString(),
-//         type: getTransactionType(tx.input),
-//         gasUsed: tx.gasUsed,
-//         percent: parseFloat((tx.gasUsed / tx.gas) * 100).toFixed(2),
-//         energy: parseFloat((tx.gasUsed * tx.gasPrice) / 10 ** 15).toFixed(2),
-//         success: tx.isError === "0",
-//       }));
-
-//       // Calculate the total energy consumption for the past month
-//       const totalEnergy = calculateEnergyForPastMonth(processedTransactions);
-//       setTotalEnergy(totalEnergy);
-
-//       return processedTransactions;
-//     } else {
-//       console.error("Error fetching transactions:", data.message);
-//       return [];
-//     }
-//   } catch (err) {
-//     console.error("Error fetching transactions:", err);
-//     return [];
-//   }
-// }
