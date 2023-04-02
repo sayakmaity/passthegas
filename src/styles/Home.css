@@ -1,5 +1,8 @@
 .container {
   padding: 0 2rem;
+  height: calc(100vh - 100px); /* Subtract the height of the Navbar */
+  display: flex;
+  flex-direction: column;
 }
 
 @font-face {
@@ -14,22 +17,19 @@ body {
   font-family: 'Airbnb Cereal';
 }
 
-
-h1 {
-  text-align: left;
-}
-
 .main {
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* align-items: center; */
   font-family: 'Airbnb Cereal';
   color: #ffffff;
+}
 
+.content-wrapper {
+  max-width: 1300px;
+  width: 100%;
 }
 
 .title a {
@@ -45,14 +45,14 @@ h1 {
 .title {
   margin: 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 3rem;
   font-family: 'Airbnb Cereal';
-  text-align: left;
+  text-align: center;
 }
 
 .title,
 .description {
-  text-align: left;
+  text-align: center;
 }
 
 .connect {
@@ -72,8 +72,6 @@ h1 {
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;
-  
-  
 }
 
 .grid {
@@ -83,6 +81,7 @@ h1 {
   flex-wrap: wrap;
   max-width: 1200px;
 }
+
 .card {
   background-color: #242526;
   border: none;
