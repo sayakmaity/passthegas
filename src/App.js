@@ -204,7 +204,6 @@ export default function Home() {
                 <h4>
                   Used over the past one month in{" "}
                   {stats.transactions.toLocaleString()} Ethereum transactions
-                  consuming {stats.gwei.toFixed(2).toLocaleString()} Gwei
                 </h4>
               </StatsContainer>
 
