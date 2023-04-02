@@ -20,7 +20,7 @@ const Content = styled.div`
 `;
 
 const TransactionCard = ({ transaction }) => {
-  const { timestamp, type, gasUsed, percent, energy, success } = transaction;
+  const { link, timestamp, type, gasUsed, percent, energy, success } = transaction;
 
   return (
     <Card>
@@ -30,6 +30,7 @@ const TransactionCard = ({ transaction }) => {
         <p>Gas Used: {gasUsed} gwei </p>
         <p>Percent of Allocated Gas Used: {percent}% </p>
         <p>Energy Consumption: {energy} kWh</p>
+        <a href={link} target= "_blank" style={{"text-align":"center", "background-color":"#08105693", "color": "rgb(255, 225, 225)"}}>View on Etherscan</a>
       </Content>
       {success ? (
         <MdCheckCircle color="green" size={24} />

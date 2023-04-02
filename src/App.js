@@ -98,6 +98,7 @@ export default function Home() {
         if (data.status === "1") {
           // Process the transaction data as needed
           const processedTransactions = data.result.map((tx) => ({
+            link: "https://etherscan.io/tx/" + tx.hash,
             timestamp: new Date(tx.timeStamp * 1000).toDateString(),
             type: getTransactionType(tx.input),
             gasUsed: tx.gasUsed,
