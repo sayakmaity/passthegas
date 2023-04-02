@@ -48,6 +48,7 @@ const Container = styled.div`
 export default function Home() {
   const [transactions, setTransactions] = useState([]);
   const [totalEnergy, setTotalEnergy] = useState(0);
+  const [stats, setStats] = useState({ transactions: 0, gwei: 0 });
 
   const largeStat = 12345;
   const smallStats = [
@@ -57,18 +58,22 @@ export default function Home() {
   ];
   const ETHERSCAN_API_KEY = "247XENS1UNZU23RTB3WB2Y4ZDHWV58MH1N";
 
-  function calculateEnergyForPastMonth(transactions) {
+  function calculateStatsForPastMonth(transactions) {
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-    return transactions.reduce((acc, tx) => {
-      if (new Date(tx.timestamp) > oneMonthAgo) {
-        return acc + parseFloat(tx.energy);
-      }
-      return acc;
-    }, 0);
+    return transactions.reduce(
+      (acc, tx) => {
+        if (new Date(tx.timestamp) > oneMonthAgo) {
+          acc.transactions += 1;
+          acc.energy += parseFloat(tx.energy);
+          acc.gwei += parseFloat((tx.gasUsed * tx.gasPrice) / 10 ** 9);
+        }
+        return acc;
+      },
+      { transactions: 0, energy: 0, gwei: 0 }
+    );
   }
-
   async function fetchTransactionData(address) {
     const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
     const getTransactionType = (input) => {
@@ -90,14 +95,16 @@ export default function Home() {
           timestamp: new Date(tx.timeStamp * 1000).toDateString(),
           type: getTransactionType(tx.input),
           gasUsed: tx.gasUsed,
+          gasPrice: tx.gasPrice, // Add the gas price to the transaction data
           percent: parseFloat((tx.gasUsed / tx.gas) * 100).toFixed(2),
           energy: parseFloat((tx.gasUsed * tx.gasPrice) / 10 ** 15).toFixed(2),
           success: tx.isError === "0",
         }));
 
-        // Calculate the total energy consumption for the past month
-        const totalEnergy = calculateEnergyForPastMonth(processedTransactions);
-        setTotalEnergy(totalEnergy);
+        // Calculate the stats for the past month
+        const stats = calculateStatsForPastMonth(processedTransactions);
+        setTotalEnergy(stats.energy);
+        setStats({ transactions: stats.transactions, gwei: stats.gwei });
 
         return processedTransactions;
       } else {
@@ -109,6 +116,47 @@ export default function Home() {
       return [];
     }
   }
+
+  // async function fetchTransactionData(address) {
+  //   const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
+  //   const getTransactionType = (input) => {
+  //     if (input === "0x") {
+  //       return "Normal";
+  //     } else if (input.startsWith("0x")) {
+  //       return "Smart Contract";
+  //     } else {
+  //       return "Internal";
+  //     }
+  //   };
+
+  //   try {
+  //     const response = await fetch(url);
+  //     const data = await response.json();
+  //     if (data.status === "1") {
+  //       // Process the transaction data as needed
+  //       const processedTransactions = data.result.map((tx) => ({
+  //         timestamp: new Date(tx.timeStamp * 1000).toDateString(),
+  //         type: getTransactionType(tx.input),
+  //         gasUsed: tx.gasUsed,
+  //         percent: parseFloat((tx.gasUsed / tx.gas) * 100).toFixed(2),
+  //         energy: parseFloat((tx.gasUsed * tx.gasPrice) / 10 ** 15).toFixed(2),
+  //         success: tx.isError === "0",
+  //       }));
+
+  //       // Calculate the total energy consumption for the past month
+  //       const totalEnergy = calculateEnergyForPastMonth(processedTransactions);
+  //       setTotalEnergy(totalEnergy);
+
+  //       return processedTransactions;
+  //     } else {
+  //       console.error("Error fetching transactions:", data.message);
+  //       return [];
+  //     }
+  //   } catch (err) {
+  //     console.error("Error fetching transactions:", err);
+  //     return [];
+  //   }
+  // }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -151,11 +199,12 @@ export default function Home() {
           <StatsContainer>
             <LargeStat>{totalEnergy.toFixed(2).toLocaleString()} kWh</LargeStat>
             <SmallStatsContainer>
-              {smallStats.map((stat, index) => (
-                <SmallStat key={index}>
-                  {stat.label}: {stat.value.toLocaleString()}
-                </SmallStat>
-              ))}
+              <SmallStat>
+                Transactions: {stats.transactions.toLocaleString()}
+              </SmallStat>
+              <SmallStat>
+                Gwei: {stats.gwei.toFixed(2).toLocaleString()}
+              </SmallStat>
             </SmallStatsContainer>
           </StatsContainer>
 
