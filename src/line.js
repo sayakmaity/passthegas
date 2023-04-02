@@ -11,7 +11,7 @@ import React from "react";
 
 const LineGraph = ({ data }) => {
   return (
-    <LineChart width={600} height={300} data={data}>
+    <LineChart width={650} height={400} data={data}>
       <XAxis dataKey="name" />
       <YAxis />
       <CartesianGrid stroke="#ccc" />

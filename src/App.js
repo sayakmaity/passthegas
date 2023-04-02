@@ -4,6 +4,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import styled from "styled-components";
 import TransactionCard from "./TransactionCard";
 import LineGraph from "./line";
+import InfoCard from "./InfoCard";
 // import { connectWallet, getTransactions } from "./wallet";
 import { ethers } from "ethers";
 
@@ -192,7 +193,7 @@ export default function Home() {
       </Navbar>
       <div className="container">
         <main className="main">
-          <h1 className="title">Welcome to PassTheGas!</h1>
+          <h1 className="title">Welcome to GasGadget!</h1>
           {/* <h1 className="title">Welcome to PassTheGas!</h1> */}
           {/* Add this block for displaying the statistics */}
           {addr ? (
@@ -215,8 +216,12 @@ export default function Home() {
                   <TransactionCard key={index} transaction={transaction} />
                 ))}
               </Container>
-              <h2>Energy used over the past 10 transactions</h2>
-              <LineGraph data={graphData} />
+              <hr/>
+              <h2>kWh used over the past 10 transactions</h2>
+              <div style={{"display": "flex"}}>
+                <LineGraph data={graphData} />
+                <InfoCard/>
+              </div>
             </div>
           ) : (
             <h2 style={{ "text-align": "center" }}>
