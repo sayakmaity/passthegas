@@ -160,12 +160,11 @@ export default function Home() {
         try {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
-          // const address = await signer.getAddress();
-          const address = "0x97c46EeC87a51320c05291286f36689967834854";
+          const address = await signer.getAddress();
 
           // Replace the following line with the API call to fetch transactions
           if (addr) {
-            const data = await fetchTransactionData(address);
+            const data = await fetchTransactionData(addr);
             setTransactions(data);
           }
         } catch (err) {
