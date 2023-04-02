@@ -8,7 +8,34 @@ import { ethers } from "ethers";
 
 import "./styles/Home.css";
 import "./styles/globals.css";
+// Add this new styled-component
 
+const StatsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const LargeStat = styled.div`
+  font-size: 96px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
+const SmallStatsContainer = styled.div`
+  display: flex;
+  gap: 30px; // Increase spacing between each small stat
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const SmallStat = styled.div`
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+`;
 const Container = styled.div`
   max-width: 1300px;
   overflow-x: scroll;
@@ -20,7 +47,12 @@ const Container = styled.div`
 
 export default function Home() {
   const [transactions, setTransactions] = useState([]);
-
+  const largeStat = 12345;
+  const smallStats = [
+    { label: "Stat 1", value: 234 },
+    { label: "Stat 2", value: 567 },
+    { label: "Stat 3", value: 890 },
+  ];
   const ETHERSCAN_API_KEY = "247XENS1UNZU23RTB3WB2Y4ZDHWV58MH1N";
 
   async function fetchTransactionData(address) {
@@ -86,7 +118,19 @@ export default function Home() {
       </Navbar>
       <div className="container">
         <main className="main">
-          <h1 className="title">Welcome to PassTheGas!</h1>
+          {/* <h1 className="title">Welcome to PassTheGas!</h1> */}
+          {/* Add this block for displaying the statistics */}
+          <StatsContainer>
+            <LargeStat>{largeStat.toLocaleString()}</LargeStat>
+            <SmallStatsContainer>
+              {smallStats.map((stat, index) => (
+                <SmallStat key={index}>
+                  {stat.label}: {stat.value.toLocaleString()}
+                </SmallStat>
+              ))}
+            </SmallStatsContainer>
+          </StatsContainer>
+
           <Container>
             {transactions.map((transaction, index) => (
               <TransactionCard key={index} transaction={transaction} />
