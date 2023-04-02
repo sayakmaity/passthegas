@@ -10,10 +10,14 @@ body {
   font-family: 'Airbnb Cereal';
 }
 
-/* a {
-  color: #7dd3fc;
-  text-decoration: none;
-} */
+p {
+  background-color: #081056;
+  border-radius: 10px;
+  color: rgb(255, 225, 225);
+  width: 350px;
+  text-overflow: ellipsis;
+  padding: 3px;
+}
 
 
 h1 {

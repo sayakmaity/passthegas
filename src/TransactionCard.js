@@ -11,6 +11,7 @@ const Card = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 400px
 `;
 
 const Content = styled.div`
@@ -19,12 +20,12 @@ const Content = styled.div`
 `;
 
 const TransactionCard = ({ transaction }) => {
-  const { hash, from, to, value, success } = transaction;
+  const { timestamp, from, to, value, success } = transaction;
 
   return (
     <Card>
       <Content>
-        <p>Hash: {hash}</p>
+        <p>Date: {timestamp}</p>
         <p>From: {from}</p>
         <p>To: {to}</p>
         <p>Value: {value} ETH</p>

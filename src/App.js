@@ -10,7 +10,7 @@ import "./styles/Home.css";
 import "./styles/globals.css";
 
 const Container = styled.div`
-  max-width: 655px;
+  max-width: 1300px;
   overflow-x: scroll;
   padding: 10px;
   display: flex;
@@ -32,7 +32,7 @@ export default function Home() {
       if (data.status === "1") {
         // Process and return the transaction data as needed
         return data.result.map((tx) => ({
-          hash: tx.hash,
+          timestamp: (new Date(tx.timeStamp * 1000)).toDateString(),
           from: tx.from,
           to: tx.to,
           value: ethers.utils.formatEther(tx.value),
@@ -87,7 +87,6 @@ export default function Home() {
       <div className="container">
         <main className="main">
           <h1 className="title">Welcome to PassTheGas!</h1>
-          {/* <CarouselContainer data={transactions}/> */}
           <Container>
             {transactions.map((transaction, index) => (
               <TransactionCard key={index} transaction={transaction} />
