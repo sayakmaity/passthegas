@@ -8,15 +8,16 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Airbnb Cereal';
+  font-size: large;
 }
 
 p {
-  background-color: #081056;
+  /* background-color: #081056;
   border-radius: 10px;
-  color: rgb(255, 225, 225);
+  color: rgb(255, 225, 225); */
   width: 350px;
   text-overflow: ellipsis;
-  padding: 3px;
+  /* padding: 3px; */
 }
 
 

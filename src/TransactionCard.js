@@ -20,15 +20,16 @@ const Content = styled.div`
 `;
 
 const TransactionCard = ({ transaction }) => {
-  const { timestamp, from, to, value, success } = transaction;
+  const { timestamp, type, gasUsed, percent, energy, success } = transaction;
 
   return (
     <Card>
       <Content>
         <p>Date: {timestamp}</p>
-        <p>From: {from}</p>
-        <p>To: {to}</p>
-        <p>Value: {value} ETH</p>
+        <p>Transaction Type: {type}</p>
+        <p>Gas Used: {gasUsed} gwei </p>
+        <p>Percent of Allocated Gas Used: {percent}% </p>
+        <p>Energy Consumption: {energy} kWh</p>
       </Content>
       {success ? (
         <MdCheckCircle color="green" size={24} />
