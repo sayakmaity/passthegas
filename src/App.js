@@ -22,7 +22,6 @@ const LargeStat = styled.div`
   font-size: 96px;
   font-weight: bold;
   text-align: center;
-  // margin-bottom: 10px;
 `;
 
 const SmallStatsContainer = styled.div`
@@ -54,6 +53,12 @@ export default function Home() {
   const [stats, setStats] = useState({ transactions: 0, gwei: 0 });
   const [graphData, setGraphData] = useState([]);
 
+  const largeStat = 12345;
+  const smallStats = [
+    { label: "Stat 1", value: 234 },
+    { label: "Stat 2", value: 567 },
+    { label: "Stat 3", value: 890 },
+  ];
   const ETHERSCAN_API_KEY = "247XENS1UNZU23RTB3WB2Y4ZDHWV58MH1N";
 
   function calculateStatsForPastMonth(transactions) {
@@ -63,7 +68,6 @@ export default function Home() {
     return transactions.reduce(
       (acc, tx) => {
         if (new Date(tx.timestamp) > oneMonthAgo) {
-          console.log(2)
           acc.transactions += 1;
           acc.energy += parseFloat(tx.energy);
           acc.gwei += parseFloat((tx.gasUsed * tx.gasPrice) / 10 ** 9);
@@ -107,8 +111,8 @@ export default function Home() {
           timestamp: String(tx.timeStamp * 1000),
           energy: parseFloat((tx.gasUsed * tx.gasPrice) / 10 ** 15).toFixed(2)
         }));
-        setGraphData(graphDataProcessing)
-        console.log(graphDataProcessing)
+        setGraphData(graphDataProcessing.slice(0,10))
+        console.log(graphDataProcessing.slice(0,10))
         
 
         // Calculate the stats for the past month
@@ -181,7 +185,7 @@ export default function Home() {
 
           // Replace the following line with the API call to fetch transactions
           if (addr) {
-            const data = await fetchTransactionData(addr);
+            const data = await fetchTransactionData(address);
             setTransactions(data);
           }
         } catch (err) {
@@ -233,6 +237,7 @@ export default function Home() {
                 <TransactionCard key={index} transaction={transaction} />
               ))}
             </Container>
+            <h2>Energy used over the past 10 transactions</h2>
             <LineGraph data={graphData}/>
             </div>
           ) : (
