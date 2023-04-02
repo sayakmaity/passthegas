@@ -15,6 +15,11 @@ body {
   text-decoration: none;
 } */
 
+
+h1 {
+  text-align: left;
+}
+
 * {
   box-sizing: border-box;
 }

@@ -14,6 +14,11 @@ body {
   font-family: 'Airbnb Cereal';
 }
 
+
+h1 {
+  text-align: left;
+}
+
 .main {
   min-height: 100vh;
   padding: 4rem 0;
@@ -42,11 +47,12 @@ body {
   line-height: 1.15;
   font-size: 4rem;
   font-family: 'Airbnb Cereal';
+  text-align: left;
 }
 
 .title,
 .description {
-  text-align: center;
+  text-align: left;
 }
 
 .connect {

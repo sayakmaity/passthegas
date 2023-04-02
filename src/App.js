@@ -10,9 +10,12 @@ import "./styles/Home.css";
 import "./styles/globals.css";
 
 const Container = styled.div`
-  max-height: 400px;
-  overflow-y: scroll;
+  max-width: 655px;
+  overflow-x: scroll;
   padding: 10px;
+  display: flex;
+  border: solid 1px;
+  border-radius: 10px;
 `;
 
 export default function Home() {
@@ -84,11 +87,7 @@ export default function Home() {
       <div className="container">
         <main className="main">
           <h1 className="title">Welcome to PassTheGas!</h1>
-          <p className="description">
-            Get started by configuring your desired network in{" "}
-            <code className="code">src/index.js</code>, then modify the{" "}
-            <code className="code">src/App.js</code> file!
-          </p>
+          {/* <CarouselContainer data={transactions}/> */}
           <Container>
             {transactions.map((transaction, index) => (
               <TransactionCard key={index} transaction={transaction} />

@@ -7,7 +7,7 @@ const Card = styled.div`
   color: #081056;
   border-radius: 8px;
   padding: 15px;
-  margin-bottom: 10px;
+  margin-right: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
